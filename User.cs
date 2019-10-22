@@ -2,7 +2,12 @@
 
 class User 
 {
-    public class User(string username = "default", string password = "CLEAR", string address, int creditCardNum) 
+    private string username;
+    private string password;
+    private string address;
+    private string creditCardNum;
+
+    public User(string address, string creditCardNum, string username = "default", string password = "CLEAR") 
     {
         this.username = username;
         this.password = password;

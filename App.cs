@@ -18,11 +18,7 @@ namespace SoftwareArch.OSC
 
             Console.WriteLine("Welcome back, " + name + ".  You are using cart " + cartID);
 
-            Console.WriteLine("OPTIONS");
-            Console.WriteLine("     'P' - View, edit profile information");
-            Console.WriteLine("     'C' - View your cart");
-            Console.WriteLine("     'I' - View inventory");
-
+            DisplayOptions();
             string choice = Console.ReadLine();
 
             switch (choice)
@@ -75,6 +71,14 @@ namespace SoftwareArch.OSC
                 case "n":
                     return;
             }
+        }
+
+        private static void DisplayOptions()
+        {
+            Console.WriteLine("OPTIONS");
+            Console.WriteLine("     'P' - View, edit profile information");
+            Console.WriteLine("     'C' - View your cart");
+            Console.WriteLine("     'I' - View inventory");
         }
     }
 }

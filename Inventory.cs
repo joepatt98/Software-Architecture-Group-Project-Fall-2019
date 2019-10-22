@@ -2,15 +2,17 @@ using System;
 using System.Data.SQLite;
 
 namespace SoftwareArch.OSC{
-    class Inventory{
-
+    class Inventory
+    {
         private Database databaseConnection;
 
-        public Inventory(){
+        public Inventory()
+        {
             databaseConnection = new Database();
         }
 
-        public void GetCurrentInventory(){
+        public void GetCurrentInventory()
+        {
             string query = "SELECT * FROM item";
             SQLiteDataReader items = databaseConnection.ExecuteQuery(query);
 
@@ -21,8 +23,6 @@ namespace SoftwareArch.OSC{
                     Console.WriteLine("Name:  {0}  |  Price:  {1}  |  Quanity Available:  {2}  |  Type:  {3}", items["name"], items["price"], items["quanity"], items["Type"]);
                 }
             }
-
-
         }
 
         public SQLiteDataReader GetItemByID(string productID)
@@ -41,7 +41,9 @@ namespace SoftwareArch.OSC{
             {
                 Console.WriteLine("Item not found");
                 Console.WriteLine("Please enter a correct Product ID from the store");
-                return GetItemByID(Console.ReadLine());
+                productID = Console.ReadLine();
+                return GetItemByID(productID);
             }
         }
+    }
 }
