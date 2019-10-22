@@ -1,0 +1,23 @@
+﻿<Properties StartupConfiguration="{61C7A164-E1CD-407A-9918-2CDBB0CC506B}|Default">
+  <MonoDevelop.Ide.ItemProperties.Software__Arch__HWK__3 PreferredExecutionTarget="MonoDevelop.Default" />
+  <MonoDevelop.Ide.Workbench>
+    <Pads>
+      <Pad Id="ProjectPad">
+        <State name="__root__">
+          <Node name="Software_Arch_HWK_3" expanded="True">
+            <Node name="Software_Arch_HWK_3" expanded="True">
+              <Node name="Form1.cs" expanded="True" />
+              <Node name="Inventory.cs" selected="True" />
+            </Node>
+          </Node>
+        </State>
+      </Pad>
+    </Pads>
+  </MonoDevelop.Ide.Workbench>
+  <MonoDevelop.Ide.DebuggingService.PinnedWatches />
+  <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug|x86" />
+  <MonoDevelop.Ide.DebuggingService.Breakpoints>
+    <BreakpointStore />
+  </MonoDevelop.Ide.DebuggingService.Breakpoints>
+  <MultiItemStartupConfigurations />
+</Properties>
