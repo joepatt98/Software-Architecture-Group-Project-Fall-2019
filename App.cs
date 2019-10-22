@@ -14,182 +14,67 @@ namespace SoftwareArch.OSC
     {
         static void Main(string[] args)
         {
-            //THIS NEEDS TO BE A DIFFERENT FUNCTION
-            //static void store_front(string username)
+            //login stuff here   
 
-            string store_query = "SELECT * FROM User WHERE username ='" + username + "'";
-            SQLiteCommand check_store = new SQLiteCommand(store_query, databaseObject.myConnection);
-            databaseObject.OpenConnection();
-            SQLiteDataReader store_result = check_store.ExecuteReader();
+            Console.WriteLine("Welcome back, " + name + ".  You are using cart " + cartID);
 
-            Inventory inventory = new Inventory
-            Console.WriteLine("Welcome back, " + real_name + ".  You are using cart " + cartID);
+            Console.WriteLine("OPTIONS");
+            Console.WriteLine("     'P' - View, edit profile information");
+            Console.WriteLine("     'C' - View your cart");
+            Console.WriteLine("     'I' - View inventory");
 
+            string choice = Console.ReadLine();
+
+            switch (choice)
+            {
+                case "P":
+                    //Profile
+                    break;
+                case "C":
+                    //Cart
+                    break;
+                case "I":
+                    ViewInventory();
+                    break;
+                default:
+                    //Re-show options
+                    break;
+            }
+        }
+
+        private static void ViewInventory() {
             Console.WriteLine("Current Items available");
-            
+            Inventory inventory = new Inventory();
+            inventory.GetCurrentInventory();
 
+            Console.WriteLine("Purchase an item? (y/n)");
+            string choice = Console.ReadLine();
 
-            Console.WriteLine("Please enter the Product ID of the item you wish to purchase: ");
-            Console.WriteLine("Press 'Q' to view and edit your profile information and 'C' to view your cart");
-
-            //Searches for item:
-
-            //declare variables
-            string itemSelection = Console.ReadLine();
-
-            
-            SQLiteDataReader item_result = check_item.ExecuteReader();
-
-            if (item_choice == "Q")
+            switch (choice)
             {
-                string profile_query = "SELECT * FROM User WHERE username ='" + username + "'";
-                SQLiteCommand profile_view = new SQLiteCommand(profile_query, databaseObject.myConnection);
-                databaseObject.OpenConnection();
-
-                SQLiteDataReader result_profile = profile_view.ExecuteReader();
-
-                Console.WriteLine("Viewing your profile....");
-                if (result_profile.HasRows)
-                {
-                    while (result_profile.Read())
-                        Console.WriteLine("Username:  {0}     \n1. Real Name:  {1}      \n2. Address:  {2}\n3. Payment:  {3}      \n4. Phone Number:  {4}     ", result_profile["username"], result_profile["name"], result_profile["addr"], result_profile["payment"], result_profile["phone"], result_profile);
-
-                }
-                Console.WriteLine("\nPress 1-4 to edit profile fields.  And 'K' to view purchase history ");
-                
-                string name_user_choice;
-                string addr_user_choice;
-                string pay_user_choice;
-                string phone_user_choice;
-                string profile_choice = Console.ReadLine();
-
-                if (profile_choice == "2")
-                {
-
-                    Console.WriteLine("Choose enter new Address...");
-                    addr_user_choice = Console.ReadLine();
-                    Console.WriteLine("Field updated...");
-                    string update_db_user2 = "UPDATE User SET addr = '" + addr_user_choice + "' WHERE username = '" + username +"'";
-                    SQLiteCommand updating_addr = new SQLiteCommand(update_db_user2, databaseObject.myConnection);
-                    var updater2 = updating_addr.ExecuteNonQuery();
-                    databaseObject.OpenConnection();
-                    Console.WriteLine();
-
-
-
-                }
-                if (profile_choice == "3")
-                {
-
-                    Console.WriteLine("Choose enter new payment method...");
-                    pay_user_choice = Console.ReadLine();
-                    Console.WriteLine("Field updated...");
-                    string update_db_user3 = "UPDATE User SET payment = '" + pay_user_choice + "' WHERE username = '" + username + "'";
-                    Console.WriteLine(update_db_user3);
-                    SQLiteCommand updating_payment = new SQLiteCommand(update_db_user3, databaseObject.myConnection);
-                    databaseObject.OpenConnection();
-                    Console.WriteLine();
-
-                }
-                if (profile_choice == "4")
-                {
-
-                    Console.WriteLine("Choose enter new phone...");
-                    phone_user_choice = Console.ReadLine();
-                    Console.WriteLine("Field updated...");
-                    string update_db_user = "UPDATE User SET phone = '" + phone_user_choice + "' WHERE username = '" + username + "'";
-                    SQLiteCommand updating_phone = new SQLiteCommand(update_db_user, databaseObject.myConnection);
-                    var updater4 = updating_phone.ExecuteNonQuery();
-                    databaseObject.OpenConnection();
-                    Console.WriteLine();
-
-                }
-                if (profile_choice == "1")
-                {
-                    Console.WriteLine("Choose enter new name...");
-                    name_user_choice = Console.ReadLine();
-                    Console.WriteLine("Field updated...");
-                    string update_db_user = "UPDATE User SET name = '" + name_user_choice + "' WHERE username = '" + username + "'";
-                    SQLiteCommand updating_username = new SQLiteCommand(update_db_user, databaseObject.myConnection);
-                    var updater2 = updating_username.ExecuteNonQuery();
-                    databaseObject.OpenConnection();
-                    Console.WriteLine();
-                }
-                databaseObject.CloseConnection();
-                Console.ReadKey();
+                case "y":
+                    //continue
+                    break;
+                case "n":
+                    return;
             }
 
-            while (item_check == false)
+            Console.WriteLine("Enter product ID of item to purchase: ");
+            string id = Console.ReadLine();
 
-                if (item_result.HasRows)
-                {
-                    item_found = "Item selected: ";
-                    item_result.Read();
-                    item_name = (string)item_result["name"];
-                    item_descrip = (string)item_result["description"];
-                    quanity = Convert.ToInt32(item_result["quanity"]);
+            SQLiteDataReader item = inventory.GetItemByID(id);
 
+            Console.WriteLine("Add item to cart? (y/n)");
 
-                    //string pass_check = user_result["password"].ToString()
-                    item_check = true;
-
-                }
-                else
-                {
-                    Console.WriteLine(item_found);
-                    Console.WriteLine("Please enter a correct Product ID from the store");
-                    item_choice = Console.ReadLine();
-                    item_query = "SELECT * FROM Item WHERE ProductID ='" + item_choice + "'";
-                    check_item = new SQLiteCommand(item_query, databaseObject.myConnection);
-                    databaseObject.OpenConnection();
-                    item_result = check_user.ExecuteReader();
-                }
-
-            Console.WriteLine(item_found + item_name);
-            Console.WriteLine("Description: " + item_descrip);
-            Console.WriteLine("Amount: " + quanity);
-
-            while (item_confirm != "Y"  && item_confirm != "N")
+            switch (choice)
             {
-                Console.WriteLine("Add " + item_name + " to cart? (Y/N)");
-                item_confirm = Console.ReadLine();
+                case "y":
+                    Console.WriteLine("Adding " + item["name"] + " to your cart...");
+                    //code for purchasing?
+                    break;
+                case "n":
+                    return;
             }
-
-            if (item_confirm == "Y")
-            {
-                Console.WriteLine("Adding " + item_name + " to your cart...");
-                if (quanity == 0)
-                {
-                    Console.WriteLine("Sorry, this item is sold out.");
-                    //Call the function to reset the store front
-                }
-                else
-                {
-                    //UPDATE THE ITEM DATA BASE
-                    Console.WriteLine("Item added!");
-                    string update_db = "UPDATE Item SET quanity = quanity - 1 WHERE ProductID = " + item_choice;
-                    SQLiteCommand updating_items = new SQLiteCommand(update_db, databaseObject.myConnection);
-                    var updater = updating_items.ExecuteNonQuery();
-
-                    //UPDATE THE CART DATA BASE
-                    //INCOMPLETE
-                    //string update_cart = "INSERT INTO cart where cartID = " + cartID +" and "
-                    Console.WriteLine();
-                    databaseObject.OpenConnection();
-
-                }
-            }
-           if(item_confirm == "N")
-            {
-                Console.WriteLine("Canceled!");
-                //recall the storefront function from the beginning
-            }
-
-            //This is the end 
-
-            databaseObject.CloseConnection();
-
-            Console.ReadKey();
         }
     }
 }

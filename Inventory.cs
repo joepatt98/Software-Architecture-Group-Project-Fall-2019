@@ -3,7 +3,9 @@ using System.Data.SQLite;
 
 namespace SoftwareArch.OSC{
     class Inventory{
+
         private Database databaseConnection;
+
         public Inventory(){
             databaseConnection = new Database();
         }
@@ -23,9 +25,23 @@ namespace SoftwareArch.OSC{
 
         }
 
-        public void GetItemByID(string productID)
+        public SQLiteDataReader GetItemByID(string productID)
         {
             string query = "SELECT * FROM Item WHERE ProductID ='" + productID + "'";
-            SQLiteDataReader item = databaseConnection.ExecuteQuery(query);
+            SQLiteDataReader items = databaseConnection.ExecuteQuery(query);
+
+            if (items.HasRows)
+            {
+                Console.WriteLine("Item Selected: {0}", items["name"]);
+                Console.WriteLine("Description: {0}", items["description"]);
+                Console.WriteLine("Quantity: {0}", items["quantity"]);
+                return items;
+            }
+            else
+            {
+                Console.WriteLine("Item not found");
+                Console.WriteLine("Please enter a correct Product ID from the store");
+                return GetItemByID(Console.ReadLine());
+            }
         }
 }
