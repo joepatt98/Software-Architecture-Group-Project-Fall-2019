@@ -1,12 +1,5 @@
-//Needs to be modularized
-//Add to cart function incomplete
-//Need proper return statements
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+//TODO: TEST
 using System;
-using System.Data.SQLite; 
 
 namespace SoftwareArch.OSC
 {
@@ -14,7 +7,14 @@ namespace SoftwareArch.OSC
     {
         static void Main(string[] args)
         {
-            //login stuff here   
+            
+
+            Console.WriteLine("Welcome to Generic Online Shopping Center! ");
+
+            //TODO: INSERT LOGIN STUFF
+            //TODO: DECIDE FLOW OF MAIN CONSOLE
+            string name;
+            string cartID;
 
             Console.WriteLine("Welcome back, " + name + ".  You are using cart " + cartID);
 
@@ -58,19 +58,25 @@ namespace SoftwareArch.OSC
             Console.WriteLine("Enter product ID of item to purchase: ");
             string id = Console.ReadLine();
 
-            SQLiteDataReader item = inventory.GetItemByID(id);
+            Item item = inventory.GetItemByID(id);
 
             Console.WriteLine("Add item to cart? (y/n)");
 
             switch (choice)
             {
                 case "y":
-                    Console.WriteLine("Adding " + item["name"] + " to your cart...");
+                    Console.WriteLine("Adding " + item.Name + " to your cart...");
+                    
                     //code for purchasing?
                     break;
                 case "n":
                     return;
             }
+        }
+
+        private void AddToCart()
+        {
+
         }
 
         private static void DisplayOptions()

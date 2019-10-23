@@ -1,13 +1,23 @@
 // Class to create the purchase object
 
-class Purchase 
+namespace SoftwareArch.OSC
 {
-    public class Purchase(string item, float price, int creditCardNum, string address, string username) 
+    class Purchase
     {
-        this.item = item;
-        this.price = price;
-        this.creditCardNum = creditCardNum;
-        this.address = address;
-        this.username = username;
-    } 
+        private string item;
+        private float price;
+        private string creditCardNum;
+        private string address;
+        private string username;
+
+        public Purchase(string item, float price, string creditCardNum, string address, string username)
+        {
+            this.item = item;
+            this.price = price;
+            this.creditCardNum = creditCardNum;
+            this.address = address;
+            this.username = username;
+        }
+    }
 }
+
