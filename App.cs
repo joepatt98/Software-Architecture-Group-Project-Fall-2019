@@ -1,7 +1,5 @@
 //TODO: TEST
 using System;
-using System.Data.SQLite;
-using User;
 
 namespace SoftwareArch.OSC
 {
@@ -18,13 +16,13 @@ namespace SoftwareArch.OSC
             string usern;
             usern = Console.ReadLine();
             User authent = new User();
-            authent.User(usern);
+            authent.user(usern);
             //Console.Write("Enter your password: ");
             //string passw;
             //passw = Console.RealLine();
             //TODO: DECIDE FLOW OF MAIN CONSOLE
-            string name;
-            string cartID;
+            string name = "";
+            string cartID = "";
 
             Console.WriteLine("Welcome back, " + name + ".  You are using cart " + cartID);
 
