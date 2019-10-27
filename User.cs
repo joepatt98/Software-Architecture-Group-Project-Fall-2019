@@ -25,7 +25,11 @@ namespace SoftwareArch.OSC
             
         }
 
-        //TODO: We need to decide if this is how we want to store/indicate that the user has been authenticated.
+        internal void CurrentUser(string username)
+        {
+            throw new NotImplementedException();
+        }
+
         private bool Authenticate(string password)
         {
             Database databaseConnection = new Database();

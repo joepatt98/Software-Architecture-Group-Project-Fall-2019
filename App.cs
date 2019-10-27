@@ -1,7 +1,5 @@
 //TODO: TEST
 using System;
-using System.Data.SQLite;
-using User;
 
 namespace SoftwareArch.OSC
 {
@@ -9,16 +7,15 @@ namespace SoftwareArch.OSC
     {
         static void Main(string[] args)
         {
-            
 
             Console.WriteLine("Welcome to Generic Online Shopping Center! ");
 
-            //TODO: INSERT LOGIN STUFF\
+            //TODO: INSERT LOGIN STUFF
             Console.Write("Enter your username: ");
-            string usern;
-            usern = Console.ReadLine();
-            User authent = new User();
-            authent.User(usern);
+            string username;
+            username = Console.ReadLine();
+            User authenticate = new User();
+            authenticate.CurrentUser(username);
             //Console.Write("Enter your password: ");
             //string passw;
             //passw = Console.RealLine();
@@ -98,3 +95,4 @@ namespace SoftwareArch.OSC
         }
     }
 }
+I 
