@@ -16,7 +16,7 @@ namespace SoftwareArch.OSC
         public User(string username = "default")
         {
             this.username = username;
-            Console.WriteLine("Enter password: ");
+            Console.Write("Enter password: ");
             string password = Console.ReadLine();
             if (Authenticate(password))
             {
@@ -29,20 +29,25 @@ namespace SoftwareArch.OSC
         private bool Authenticate(string password)
         {
             Database databaseConnection = new Database();
+            databaseConnection.OpenConnection();
 
             string usernameQuery = "SELECT * FROM USERS WHERE username = '" + username + "'";
             SQLiteDataReader userResult = databaseConnection.ExecuteQuery(usernameQuery);
 
             if (userResult.HasRows)
             {
-                if(password == userResult["password"])
+
+                userResult.Read();
+                if (password == userResult["password"].ToString())
                 {
                     authenticated = true;
+                    databaseConnection.CloseConnection();
                     return true;
                 }
+                
                 else
                 {
-                    Console.WriteLine("Invalid password. Please retry: ");
+                    Console.Write("Invalid password. Please retry: ");
                     password = Console.ReadLine();
                     //Currently will retry until valid, no escaping from this though.
                     Authenticate(password);
@@ -51,7 +56,7 @@ namespace SoftwareArch.OSC
             }
             else
             {
-                Console.WriteLine("Invalid username. Please retry: ");
+                Console.Write("Invalid username. Please retry: ");
                 this.username = Console.ReadLine();
                 //Currently will retry until valid, no escaping from this though.
                 Authenticate(password);
@@ -68,14 +73,18 @@ namespace SoftwareArch.OSC
             }
 
             Database databaseConnection = new Database();
+            databaseConnection.OpenConnection();
 
             string usernameQuery = "SELECT * FROM USERS WHERE username = '" + username + "'";
             SQLiteDataReader userResult = databaseConnection.ExecuteQuery(usernameQuery);
 
-            //TODO: ALTER DATABASE TABLE COLUMNS TO MATCH
+            userResult.Read();
+
             this.address = userResult["address"].ToString();
             this.creditCardNumber = userResult["creditCardNumber"].ToString();
-            this.name = userResult["name"].ToString();
+            this.name = userResult["firstName"].ToString() + " " + userResult["middleName"].ToString() + " " + userResult["lastName"].ToString();
+
+            databaseConnection.CloseConnection();
 
         }
     }

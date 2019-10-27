@@ -60,15 +60,20 @@
     <Reference Include="System.Xml.Linq" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Adding_to_cart.cs" />
     <Compile Include="AssemblyInfo.cs" />
+    <Compile Include="Cart.cs" />
+    <Compile Include="ComponentTester.cs" />
     <Compile Include="Database.cs" />
     <Compile Include="Form1.cs" />
     <Compile Include="Form1.Designer.cs">
       <DependentUpon>Form1.cs</DependentUpon>
     </Compile>
+    <Compile Include="haley_main.cs" />
     <Compile Include="Inventory.cs" />
     <Compile Include="App.cs" />
+    <Compile Include="Item.cs" />
+    <Compile Include="Purchase.cs" />
+    <Compile Include="User.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include=".git\config" />
