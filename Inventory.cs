@@ -17,6 +17,9 @@ namespace SoftwareArch.OSC{
         public List<Item> GetCurrentInventory()
         {
             List<Item> items = new List<Item>();
+
+            databaseConnection.OpenConnection();
+
             string query = "SELECT * FROM INVENTORY";
             SQLiteDataReader result = databaseConnection.ExecuteQuery(query);
 
@@ -24,10 +27,12 @@ namespace SoftwareArch.OSC{
             {
                 while (result.Read())
                 {
-                    Item item = new Item(result["name"].ToString(), result["productID"].ToString(), result["description"].ToString(), (int)result["quantity"], (float)result["price"]);
+                    Item item = new Item(result["name"].ToString(), result["productID"].ToString(), result["description"].ToString(), Convert.ToInt32(result["quantity"]), (float)Convert.ToDouble(result["price"]));
                     items.Add(item);
                 }
             }
+
+            databaseConnection.CloseConnection();
             return items;
         }
 
@@ -40,6 +45,7 @@ namespace SoftwareArch.OSC{
 
         public Item GetItemByID(string productID)
         {
+            databaseConnection.OpenConnection();
             string query = "SELECT * FROM INVENTORY WHERE productID ='" + productID + "'";
             SQLiteDataReader result = databaseConnection.ExecuteQuery(query);
             
@@ -51,11 +57,12 @@ namespace SoftwareArch.OSC{
                 Console.WriteLine("Description: {0}", item.Description);
                 Console.WriteLine("Quantity: {0}", item.Quantity);
 
-                
+                databaseConnection.CloseConnection();
                 return item;
             }
             else
             {
+
                 Console.WriteLine("Item not found");
                 Console.WriteLine("Please enter a correct product ID from the store");
                 productID = Console.ReadLine();

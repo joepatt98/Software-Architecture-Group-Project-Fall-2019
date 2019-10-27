@@ -10,16 +10,17 @@ namespace SoftwareArch.OSC
         public Database()
         {
 
-            myConnection = new SQLiteConnection("Data Source=OSC.db");
-            if (!File.Exists("./OSC.db"))
+            myConnection = new SQLiteConnection("Data Source=C:/Users/maris/Software_Arch_HWK_3/OSC.db;Version=3");
+            if (!File.Exists("OSC.db"))
             {
-                SQLiteConnection.CreateFile("OSC.db");
-
-                System.Console.WriteLine("Data file created");
+                System.Console.WriteLine("Data file does not exist");
             }
-
-            OpenConnection();
+            else
+            {
+                System.Console.WriteLine("Database found.");
+            }
             
+
         }
 
         public void OpenConnection()
@@ -40,13 +41,8 @@ namespace SoftwareArch.OSC
         {
             if (myConnection.State != System.Data.ConnectionState.Closed)
             {
-                myConnection.Clone();
+                myConnection.Close();
             }
-        }
-
-        ~Database()
-        {
-            CloseConnection();
         }
     }
 }
