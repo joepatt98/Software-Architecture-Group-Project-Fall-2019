@@ -1,8 +1,3 @@
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Data.SQLite;
 using System.IO;
 
@@ -15,10 +10,10 @@ namespace SoftwareArch.OSC
         public Database()
         {
 
-            myConnection = new SQLiteConnection("Data Source=database.sqlite3");
-            if (!File.Exists("./database.sqlite3"))
+            myConnection = new SQLiteConnection("Data Source=OSC.db");
+            if (!File.Exists("./OSC.db"))
             {
-                SQLiteConnection.CreateFile("database.sqlite3");
+                SQLiteConnection.CreateFile("OSC.db");
 
                 System.Console.WriteLine("Data file created");
             }

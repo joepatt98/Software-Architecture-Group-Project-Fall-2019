@@ -17,7 +17,6 @@ namespace SoftwareArch.OSC
             // Varible for queries
             queryCheck = false;
             
-            Console.WriteLine("Welcome to Generic Online Shopping Center! ");
             Console.WriteLine("Please enter your username. (Press 0 to enter as guest)");
             username = Console.ReadLine();
             

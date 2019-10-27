@@ -1,0 +1,32 @@
+CREATE TABLE INVENTORY (
+    productID     VARCHAR (40) NOT NULL
+                               PRIMARY KEY,
+    price        FLOAT        NOT NULL,
+    type       VARCHAR(25),
+    description      VARCHAR(50),
+    name          VARCHAR(30),
+    quantity       INT NOT NULL
+);
+
+CREATE TABLE USERS(
+    userID     VARCHAR (40) NOT NULL
+                               PRIMARY KEY,
+   username    VARCHAR(40) NOT NULL,
+   firstName    VARCHAR(25) NOT NULL,
+   lastName    VARCHAR(25) NOT NULL,
+   middleName    VARCHAR(25) NOT NULL
+);
+
+CREATE TABLE CART(
+    cartID     VARCHAR (40) NOT NULL
+                               PRIMARY KEY,
+    userID     VARCHAR(40) NOT NULL,
+    FOREIGN KEY(userID) REFERENCES USERS(userID)
+);
+
+CREATE TABLE CART_ITEMS(
+    cartID     VARCHAR (40) NOT NULL
+                               PRIMARY KEY,
+    productID    VARCHAR(40) NOT NULL,
+    FOREIGN KEY(productID) REFERENCES INVENTORY(productID)
+);

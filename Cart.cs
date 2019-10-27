@@ -8,9 +8,12 @@ namespace SoftwareArch.OSC
         private string id;
         private string username;
         private float total;
+        private Database databaseConnection;
 
         public Cart(Item item, string id, string username)
         {
+            databaseConnection = new Database();
+            databaseConnection.OpenConnection();
             itemList = new List<Item>();
 
             itemList.Add(item);
@@ -28,6 +31,7 @@ namespace SoftwareArch.OSC
 
         public void AddToCart(Item item)
         {
+            databaseConnection.ExecuteQuery("INSERT INTO Cart_Items VALUES (cartID, productID) (" + id + "," + item.Id +")")
             itemList.Add(item);
             total += item.Price;
         }
@@ -46,7 +50,12 @@ namespace SoftwareArch.OSC
         //TODO: CREATE PURCHASING FUNCTIONALITY
         private void Purchase()
         {
+            
+        }
 
+        ~Cart()
+        {
+            databaseConnection.CloseConnection();
         }
     }
 }

@@ -17,14 +17,14 @@ namespace SoftwareArch.OSC{
         public List<Item> GetCurrentInventory()
         {
             List<Item> items = new List<Item>();
-            string query = "SELECT * FROM item";
+            string query = "SELECT * FROM INVENTORY";
             SQLiteDataReader result = databaseConnection.ExecuteQuery(query);
 
             if (result.HasRows)
             {
                 while (result.Read())
                 {
-                    Item item = new Item(result["name"].ToString(), result["ProductID"].ToString(), result["description"].ToString(), (int)result["quantity"], (float)result["price"]);
+                    Item item = new Item(result["name"].ToString(), result["productID"].ToString(), result["description"].ToString(), (int)result["quantity"], (float)result["price"]);
                     items.Add(item);
                 }
             }
@@ -40,12 +40,12 @@ namespace SoftwareArch.OSC{
 
         public Item GetItemByID(string productID)
         {
-            string query = "SELECT * FROM Item WHERE ProductID ='" + productID + "'";
+            string query = "SELECT * FROM INVENTORY WHERE productID ='" + productID + "'";
             SQLiteDataReader result = databaseConnection.ExecuteQuery(query);
             
             if (result.HasRows)
             {
-                Item item = new Item(result["name"].ToString(), result["ProductID"].ToString(), result["description"].ToString(), (int)result["quantity"], (float)result["price"]);
+                Item item = new Item(result["name"].ToString(), result["productID"].ToString(), result["description"].ToString(), (int)result["quantity"], (float)result["price"]);
 
                 Console.WriteLine("Item Selected: {0}", item.Name);
                 Console.WriteLine("Description: {0}", item.Description);
@@ -57,7 +57,7 @@ namespace SoftwareArch.OSC{
             else
             {
                 Console.WriteLine("Item not found");
-                Console.WriteLine("Please enter a correct Product ID from the store");
+                Console.WriteLine("Please enter a correct product ID from the store");
                 productID = Console.ReadLine();
                 return GetItemByID(productID);
             }

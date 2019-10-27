@@ -30,7 +30,7 @@ namespace SoftwareArch.OSC
         {
             Database databaseConnection = new Database();
 
-            string usernameQuery = "SELECT * FROM User WHERE username = '" + username + "'";
+            string usernameQuery = "SELECT * FROM USERS WHERE username = '" + username + "'";
             SQLiteDataReader userResult = databaseConnection.ExecuteQuery(usernameQuery);
 
             if (userResult.HasRows)
@@ -69,12 +69,12 @@ namespace SoftwareArch.OSC
 
             Database databaseConnection = new Database();
 
-            string usernameQuery = "SELECT * FROM User WHERE username = '" + username + "'";
+            string usernameQuery = "SELECT * FROM USERS WHERE username = '" + username + "'";
             SQLiteDataReader userResult = databaseConnection.ExecuteQuery(usernameQuery);
 
             //TODO: ALTER DATABASE TABLE COLUMNS TO MATCH
-            this.address = userResult["addr"].ToString();
-            this.creditCardNumber = userResult["payment"].ToString();
+            this.address = userResult["address"].ToString();
+            this.creditCardNumber = userResult["creditCardNumber"].ToString();
             this.name = userResult["name"].ToString();
 
         }
