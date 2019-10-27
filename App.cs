@@ -7,21 +7,22 @@ namespace SoftwareArch.OSC
     {
         static void Main(string[] args)
         {
+            
 
             Console.WriteLine("Welcome to Generic Online Shopping Center! ");
 
-            //TODO: INSERT LOGIN STUFF
+            //TODO: INSERT LOGIN STUFF\
             Console.Write("Enter your username: ");
-            string username;
-            username = Console.ReadLine();
-            User authenticate = new User();
-            authenticate.CurrentUser(username);
+            string usern;
+            usern = Console.ReadLine();
+            User authent = new User();
+            authent.user(usern);
             //Console.Write("Enter your password: ");
             //string passw;
             //passw = Console.RealLine();
             //TODO: DECIDE FLOW OF MAIN CONSOLE
-            string name;
-            string cartID;
+            string name = "";
+            string cartID = "";
 
             Console.WriteLine("Welcome back, " + name + ".  You are using cart " + cartID);
 
@@ -95,4 +96,3 @@ namespace SoftwareArch.OSC
         }
     }
 }
-I 

@@ -13,7 +13,7 @@ namespace SoftwareArch.OSC
         private string name;
         private bool authenticated = false;
 
-        public User(string username = "default")
+        public void user(string username = "default")
         {
             this.username = username;
             Console.Write("Enter password: ");
