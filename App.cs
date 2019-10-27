@@ -17,9 +17,6 @@ namespace SoftwareArch.OSC
             usern = Console.ReadLine();
             User authent = new User();
             authent.user(usern);
-            //Console.Write("Enter your password: ");
-            //string passw;
-            //passw = Console.RealLine();
             //TODO: DECIDE FLOW OF MAIN CONSOLE
             string name = "";
             string cartID = "";
@@ -33,11 +30,17 @@ namespace SoftwareArch.OSC
             {
                 case "P":
                     //Profile
+                    Console.WriteLine("You are viewing your Profile...");
+                    Console.WriteLine("Name: " + name);
+                    Console.WriteLine("Current CartID: " + cartID);
                     break;
                 case "C":
                     //Cart
+                    Console.WriteLine("You are viewing CartID " + cartID);
                     break;
                 case "I":
+                    //Inventory
+                    Console.WriteLine("You are viewing the Inventory...");
                     ViewInventory();
                     break;
                 default:
