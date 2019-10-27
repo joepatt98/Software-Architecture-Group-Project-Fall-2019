@@ -13,8 +13,7 @@ namespace SoftwareArch.OSC
 
             Console.WriteLine("Welcome to Generic Online Shopping Center! ");
 
-            //TODO: INSERT LOGIN STUFF
-            SqlConnection 
+            //TODO: INSERT LOGIN STUFF\
             Console.Write("Enter your username: ");
             string usern;
             usern = Console.ReadLine();
