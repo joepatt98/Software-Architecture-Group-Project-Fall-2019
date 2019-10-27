@@ -31,7 +31,7 @@ namespace SoftwareArch.OSC
 
         public void AddToCart(Item item)
         {
-            databaseConnection.ExecuteQuery("INSERT INTO Cart_Items VALUES (cartID, productID) (" + id + "," + item.Id +")")
+            databaseConnection.ExecuteQuery("INSERT INTO Cart_Items VALUES (cartID, productID) (" + id + "," + item.Id + ")");
             itemList.Add(item);
             total += item.Price;
         }
@@ -50,7 +50,10 @@ namespace SoftwareArch.OSC
         //TODO: CREATE PURCHASING FUNCTIONALITY
         private void Purchase()
         {
-            
+            foreach (Item item in itemList)
+            {
+                databaseConnection.ExecuteQuery("DELETE productID WHERE productID == (item.Id) (" + item.Id + ")");
+            }
         }
 
         ~Cart()
