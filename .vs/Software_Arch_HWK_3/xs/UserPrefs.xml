@@ -6,8 +6,7 @@
         <State name="__root__">
           <Node name="Software_Arch_HWK_3" expanded="True">
             <Node name="Software_Arch_HWK_3" expanded="True">
-              <Node name="Form1.cs" expanded="True" />
-              <Node name="Inventory.cs" selected="True" />
+              <Node name="Form1.cs" expanded="True" selected="True" />
             </Node>
           </Node>
         </State>

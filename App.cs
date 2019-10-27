@@ -1,5 +1,7 @@
 //TODO: TEST
 using System;
+using System.Data.SQLite;
+using User;
 
 namespace SoftwareArch.OSC
 {
@@ -11,7 +13,15 @@ namespace SoftwareArch.OSC
 
             Console.WriteLine("Welcome to Generic Online Shopping Center! ");
 
-            //TODO: INSERT LOGIN STUFF
+            //TODO: INSERT LOGIN STUFF\
+            Console.Write("Enter your username: ");
+            string usern;
+            usern = Console.ReadLine();
+            User authent = new User();
+            authent.User(usern);
+            //Console.Write("Enter your password: ");
+            //string passw;
+            //passw = Console.RealLine();
             //TODO: DECIDE FLOW OF MAIN CONSOLE
             string name;
             string cartID;
