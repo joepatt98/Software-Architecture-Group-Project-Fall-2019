@@ -1,5 +1,6 @@
-using System.Collections.Generic;
 using System;
+using System.Collections.Generic;
+using System.Data.SQLite;
 
 namespace SoftwareArch.OSC
 {
@@ -11,6 +12,16 @@ namespace SoftwareArch.OSC
         private float total;
         private Database databaseConnection;
 
+        public Cart(string id, string username)
+        {
+            databaseConnection = new Database();
+            databaseConnection.OpenConnection();
+
+            itemList = new List<Item>();
+            this.id = id;
+            this.username = username;
+            GetTotalPrice();
+        }
         public Cart(Item item, string id, string username)
         {
             databaseConnection = new Database();
@@ -25,6 +36,7 @@ namespace SoftwareArch.OSC
 
         public Cart(List<Item> items, string id, string username)
         {
+            databaseConnection = new Database();
             itemList = items;
             this.id = id;
             this.username = username;
@@ -42,9 +54,50 @@ namespace SoftwareArch.OSC
 
         public void AddToCart(Item item)
         {
-            databaseConnection.ExecuteQuery("INSERT INTO Cart_Items VALUES (cartID, productID) (" + id + "," + item.Id + ")");
+            databaseConnection.OpenConnection();
+            SQLiteDataReader quantity = databaseConnection.ExecuteQuery("SELECT quantity FROM CART_ITEMS WHERE productID = '" + item.id + "'");
+
+            if (quantity.HasRows)
+            {
+                databaseConnection.ExecuteQuery("UPDATE CART_ITEMS SET quantity = " + (Convert.ToInt32(quantity[0]) + item.Quantity));
+            }
+            else
+            {
+                databaseConnection.ExecuteQuery("INSERT INTO CART_ITEMS VALUES (cartID, productID, quantity)" +
+                    "('" + id + "','" + item.Id + "'," + item.Quantity +")");
+            }
             itemList.Add(item);
-            total += item.Price;
+            total += item.Price * item.Quantity;
+            databaseConnection.CloseConnection();
+        }
+
+        public void RemoveFromCart(Item item)
+        {
+            databaseConnection.OpenConnection();
+            SQLiteDataReader quantity = databaseConnection.ExecuteQuery("SELECT quantity FROM CART_ITEMS WHERE productID = '" + item.id + "'");
+            int amount = Convert.ToInt32(quantity[0]);
+            if (quantity.HasRows)
+            {
+                if (amount < item.Quantity)
+                {
+                    databaseConnection.ExecuteQuery("DELETE FROM CART_ITEMS WHERE productId = '" + item.Id + "'");
+                    //setting this because the quantity of the item to remove should not be higher than 
+                    //the amount that exists in the cart
+                    item.Quantity = amount; 
+                }
+                else
+                {
+                    databaseConnection.ExecuteQuery("UPDATE CART_ITEMS SET quantity = " + (Convert.ToInt32(quantity[0]) - item.Quantity));
+                }
+            }
+            else
+            {
+                Console.WriteLine("ERROR: Cannot remove an item that does not exist in cart.");
+            }
+                
+            itemList.Remove(item);
+            total -= item.Price * item.Quantity;
+            databaseConnection.CloseConnection();
         }
 
         private float GetTotalPrice()
@@ -63,7 +116,8 @@ namespace SoftwareArch.OSC
         {
             foreach (Item item in itemList)
             {
-                databaseConnection.ExecuteQuery("DELETE productID WHERE productID == (item.Id) (" + item.Id + ")");
+                databaseConnection.ExecuteQuery("DELETE FROM CART WHERE productID == (item.Id) (" + item.Id + ")");
+                databaseConnection.ExecuteQuery("UPDATE INVENTORY SET quantity = " + (item.Quantity-1) + "WHERE productID = '" + item.Id + "'");
             }
         }
 
