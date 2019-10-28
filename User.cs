@@ -14,7 +14,7 @@ namespace SoftwareArch.OSC
         private bool authenticated = false;
         public string cartId { get; set; }
 
-        public void user(string username = "default")
+        public User(string username = "default")
         {
             this.username = username;
             Console.Write("Enter password: ");
@@ -90,8 +90,8 @@ namespace SoftwareArch.OSC
             this.creditCardNumber = userResult["creditCardNumber"].ToString();
             this.name = userResult["firstName"].ToString() + " " + userResult["middleName"].ToString() + " " + userResult["lastName"].ToString();
 
-            string cartIDQuery = "SELECT cartId FROM CART WHERE userId = '" + userId + "'";
-            SQLiteDataReader cartResult = databaseConnection.ExecuteQuery(usernameQuery);
+            string cartIDQuery = "SELECT cartID FROM CART WHERE userID = '" + userId + "'";
+            SQLiteDataReader cartResult = databaseConnection.ExecuteQuery(cartIDQuery);
 
             cartResult.Read();
 

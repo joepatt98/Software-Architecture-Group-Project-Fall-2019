@@ -51,7 +51,8 @@ namespace SoftwareArch.OSC{
             
             if (result.HasRows)
             {
-                Item item = new Item(result["name"].ToString(), result["productID"].ToString(), result["description"].ToString(), (int)result["quantity"], (float)result["price"]);
+                result.Read();
+                Item item = new Item(result["name"].ToString(), result["productID"].ToString(), result["description"].ToString(), (int)result["quantity"], (float)Convert.ToDouble(result["price"]));
 
                 Console.WriteLine("Item Selected: {0}", item.Name);
                 Console.WriteLine("Description: {0}", item.Description);
@@ -66,6 +67,7 @@ namespace SoftwareArch.OSC{
                 Console.WriteLine("Item not found");
                 Console.WriteLine("Please enter a correct product ID from the store");
                 productID = Console.ReadLine();
+                databaseConnection.CloseConnection();
                 return GetItemByID(productID);
             }
         }

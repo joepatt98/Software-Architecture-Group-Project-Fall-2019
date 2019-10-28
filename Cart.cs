@@ -15,7 +15,6 @@ namespace SoftwareArch.OSC
         public Cart(string id, User user)
         {
             databaseConnection = new Database();
-            databaseConnection.OpenConnection();
 
             itemList = new List<Item>();
             this.id = id;
@@ -25,7 +24,6 @@ namespace SoftwareArch.OSC
         public Cart(Item item, string id, User user)
         {
             databaseConnection = new Database();
-            databaseConnection.OpenConnection();
             itemList = new List<Item>();
 
             itemList.Add(item);
@@ -46,16 +44,19 @@ namespace SoftwareArch.OSC
         {
             databaseConnection.OpenConnection();
             SQLiteDataReader quantity = databaseConnection.ExecuteQuery("SELECT quantity FROM CART_ITEMS WHERE productID = '" + item.Id + "'");
-            
+
             if (quantity.HasRows)
             {
-                databaseConnection.ExecuteQuery("UPDATE CART_ITEMS SET quantity = " + (Convert.ToInt32(quantity[0]) + item.Quantity));
+                int newQuanitity = (Convert.ToInt32(quantity[0]) + item.Quantity);
+
+                databaseConnection.ExecuteQuery("UPDATE CART_ITEMS SET quantity = " + newQuanitity);
             }
             else
             {
-                databaseConnection.ExecuteQuery("INSERT INTO CART_ITEMS VALUES (cartID, productID, quantity)" +
+                databaseConnection.ExecuteQuery("INSERT INTO CART_ITEMS (cartID, productID, quantity) VALUES " +
                     "('" + id + "','" + item.Id + "'," + item.Quantity +")");
             }
+
             itemList.Add(item);
             total += item.Price * item.Quantity;
             databaseConnection.CloseConnection();
