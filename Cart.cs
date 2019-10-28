@@ -42,6 +42,16 @@ namespace SoftwareArch.OSC
             this.username = username;
         }
 
+        public void DisplayCurrentCart()
+		{
+            foreach (Item item in itemList)
+			{
+				Console.WriteLine("Name: {0} | Price: {1} | Quantity: {2}", item.Name, item.Price, item.Quantity);
+			}
+
+			Console.WriteLine("Total: " + total);
+		}
+
         public void AddToCart(Item item)
         {
             databaseConnection.OpenConnection();
