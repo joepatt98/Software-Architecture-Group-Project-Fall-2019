@@ -43,20 +43,11 @@ namespace SoftwareArch.OSC
         public void AddToCart(Item item)
         {
             databaseConnection.OpenConnection();
-            SQLiteDataReader quantity = databaseConnection.ExecuteQuery("SELECT quantity FROM CART_ITEMS WHERE productID = '" + item.Id + "'");
 
-            if (quantity.HasRows)
-            {
-                int newQuanitity = (Convert.ToInt32(quantity[0]) + item.Quantity);
+            string query = "INSERT INTO CART_ITEMS (cartID, productID, quantity) VALUES " +
+                "('" + id + "','" + item.Id + "'," + item.Quantity + ")";
 
-                databaseConnection.ExecuteQuery("UPDATE CART_ITEMS SET quantity = " + newQuanitity);
-            }
-            else
-            {
-                databaseConnection.ExecuteQuery("INSERT INTO CART_ITEMS (cartID, productID, quantity) VALUES " +
-                    "('" + id + "','" + item.Id + "'," + item.Quantity +")");
-            }
-
+            databaseConnection.ExecuteQuery(query);
             itemList.Add(item);
             total += item.Price * item.Quantity;
             databaseConnection.CloseConnection();
@@ -140,11 +131,6 @@ namespace SoftwareArch.OSC
                 );
 
             }
-            databaseConnection.CloseConnection();
-        }
-
-        ~Cart()
-        {
             databaseConnection.CloseConnection();
         }
     }
