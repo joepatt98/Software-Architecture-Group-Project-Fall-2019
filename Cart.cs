@@ -8,21 +8,21 @@ namespace SoftwareArch.OSC
     {
         List<Item> itemList;
         private string id;
-        private string username;
+        private User user;
         private float total;
         private Database databaseConnection;
 
-        public Cart(string id, string username)
+        public Cart(string id, User user)
         {
             databaseConnection = new Database();
             databaseConnection.OpenConnection();
 
             itemList = new List<Item>();
             this.id = id;
-            this.username = username;
+            this.user= user;
             GetTotalPrice();
         }
-        public Cart(Item item, string id, string username)
+        public Cart(Item item, string id, User user)
         {
             databaseConnection = new Database();
             databaseConnection.OpenConnection();
@@ -30,23 +30,23 @@ namespace SoftwareArch.OSC
 
             itemList.Add(item);
             this.id = id;
-            this.username = username;
+            this.user = user;
             GetTotalPrice();
         }
 
-        public Cart(List<Item> items, string id, string username)
+        public Cart(List<Item> items, string id, User user)
         {
             databaseConnection = new Database();
             itemList = items;
             this.id = id;
-            this.username = username;
+            this.user = user;
         }
 
         public void AddToCart(Item item)
         {
             databaseConnection.OpenConnection();
-            SQLiteDataReader quantity = databaseConnection.ExecuteQuery("SELECT quantity FROM CART_ITEMS WHERE productID = '" + item.id + "'");
-
+            SQLiteDataReader quantity = databaseConnection.ExecuteQuery("SELECT quantity FROM CART_ITEMS WHERE productID = '" + item.Id + "'");
+            
             if (quantity.HasRows)
             {
                 databaseConnection.ExecuteQuery("UPDATE CART_ITEMS SET quantity = " + (Convert.ToInt32(quantity[0]) + item.Quantity));
@@ -64,20 +64,26 @@ namespace SoftwareArch.OSC
         public void RemoveFromCart(Item item)
         {
             databaseConnection.OpenConnection();
-            SQLiteDataReader quantity = databaseConnection.ExecuteQuery("SELECT quantity FROM CART_ITEMS WHERE productID = '" + item.id + "'");
+            SQLiteDataReader quantity = databaseConnection.ExecuteQuery(
+                        "SELECT quantity FROM CART_ITEMS WHERE productID = '" + item.Id + "' AND cartID ='" + id + "'"
+            );
             int amount = Convert.ToInt32(quantity[0]);
             if (quantity.HasRows)
             {
                 if (amount < item.Quantity)
                 {
-                    databaseConnection.ExecuteQuery("DELETE FROM CART_ITEMS WHERE productId = '" + item.Id + "'");
+                    databaseConnection.ExecuteQuery(
+                        "DELETE FROM CART_ITEMS WHERE productId = '" + item.Id + "' AND cartID ='" + id + "'"
+                    ); 
                     //setting this because the quantity of the item to remove should not be higher than 
                     //the amount that exists in the cart
                     item.Quantity = amount; 
                 }
                 else
                 {
-                    databaseConnection.ExecuteQuery("UPDATE CART_ITEMS SET quantity = " + (Convert.ToInt32(quantity[0]) - item.Quantity));
+                    databaseConnection.ExecuteQuery(
+                        "UPDATE CART_ITEMS SET quantity = " + (Convert.ToInt32(quantity[0]) - item.Quantity) + " WHERE productId = '" + item.Id + "' AND cartID = '" + id + "'"
+                    );
                 }
             }
             else
@@ -104,11 +110,20 @@ namespace SoftwareArch.OSC
         //TODO: CREATE PURCHASING FUNCTIONALITY
         private void Purchase()
         {
+            databaseConnection.OpenConnection();
+
             foreach (Item item in itemList)
             {
-                databaseConnection.ExecuteQuery("DELETE FROM CART WHERE productID == (item.Id) (" + item.Id + ")");
-                databaseConnection.ExecuteQuery("UPDATE INVENTORY SET quantity = " + (item.Quantity-1) + "WHERE productID = '" + item.Id + "'");
+                SQLiteDataReader quantity = databaseConnection.ExecuteQuery("SELECT quantity FROM CART_ITEMS WHERE productID = '" + item.Id + "'");
+                int amount = Convert.ToInt32(quantity[0]);
+                databaseConnection.ExecuteQuery("DELETE FROM CART_ITEM WHERE productID == (item.Id) (" + item.Id + ")");
+                databaseConnection.ExecuteQuery("UPDATE INVENTORY SET quantity = " + (amount - item.Quantity) + "WHERE productID = '" + item.Id + "'");
+                databaseConnection.ExecuteQuery(
+                       "INSERT INTO PURCHASE (purchaseID, userId, creditCardNumber, address) VALUES (" + Guid.NewGuid().ToString() + "," + user.
+                databaseConnection.ExecuteQuery("INSERT INTO PURCHASE_ITEM")
+
             }
+            databaseConnection.CloseConnection();
         }
 
         ~Cart()
