@@ -117,7 +117,6 @@ namespace SoftwareArch.OSC
             return totalPrice;
         }
 
-        //TODO: CREATE PURCHASING FUNCTIONALITY
         public void Purchase()
         {
             databaseConnection.OpenConnection();

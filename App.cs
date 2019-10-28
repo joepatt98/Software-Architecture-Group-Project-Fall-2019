@@ -11,10 +11,10 @@ namespace SoftwareArch.OSC
             Console.WriteLine("Welcome to Generic Online Shopping Center! ");
 
             Console.Write("Enter your username: ");
-            string usern;
-            usern = Console.ReadLine();
-            User authent = new User();
-            authent.user(usern);
+            string username;
+            username = Console.ReadLine();
+            User user = new User();
+            user.user(username);
             string name = "";
             string cartID = "";
 
@@ -31,7 +31,8 @@ namespace SoftwareArch.OSC
                     Console.WriteLine("Name: " + name);
                     Console.WriteLine("Current CartID: " + cartID);
                     //Viewing purchase history
-                    PurchaseHistory.DisplayPurchaseHistory();
+                    PurchaseHistory purchaseHistory = new PurchaseHistory(user.userId);
+                    purchaseHistory.DisplayPurchaseHistory();
                     //Re-showing options
                     DisplayOptions();
                     break;
@@ -39,7 +40,8 @@ namespace SoftwareArch.OSC
                     //Cart
                     Console.WriteLine("You are viewing CartID " + cartID);
                     //Displaying current cart
-                    Cart.DisplayCurrentCart();
+                    Cart cart = new Cart(user.cartId, user);
+                    cart.DisplayCurrentCart();
                     break;
                 case "I":
                     //Inventory

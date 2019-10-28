@@ -12,6 +12,7 @@ namespace SoftwareArch.OSC
         public string creditCardNumber { get; set; }
         public string name { get; set; }
         private bool authenticated = false;
+        public string cartId { get; set; }
 
         public void user(string username = "default")
         {
@@ -84,9 +85,17 @@ namespace SoftwareArch.OSC
 
             userResult.Read();
 
+            this.userId = userResult["userID"].ToString();
             this.address = userResult["address"].ToString();
             this.creditCardNumber = userResult["creditCardNumber"].ToString();
             this.name = userResult["firstName"].ToString() + " " + userResult["middleName"].ToString() + " " + userResult["lastName"].ToString();
+
+            string cartIDQuery = "SELECT cartId FROM CART WHERE userId = '" + userId + "'";
+            SQLiteDataReader cartResult = databaseConnection.ExecuteQuery(usernameQuery);
+
+            cartResult.Read();
+
+            this.cartId = cartResult["cartID"].ToString();
 
             databaseConnection.CloseConnection();
 

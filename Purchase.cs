@@ -20,7 +20,7 @@ namespace SoftwareArch.OSC
             this.userId = userId;
             this.creditCardNum = creditCardNum;
             this.address = address;
-            this.total = total
+            this.total = total;
             Database databaseConnection = new Database();
             products = new List<Item>();
         }

@@ -10,8 +10,8 @@ namespace SoftwareArch.OSC
         public Database()
         {
 
-            myConnection = new SQLiteConnection("Data Source=C:/Users/joepatterson/source/repos/Software_Arch_HWK_3/OSC.db;Version=3");
-            if (!File.Exists("C:/Users/joepatterson/source/repos/Software_Arch_HWK_3/OSC.db"))
+            myConnection = new SQLiteConnection(@"Data Source=/Users/hcw/Documents/School\ Work\ 2/SE\ Arch/Software_Arch_HWK_3/OSC.db");
+            if (!File.Exists(@"=/Users/hcw/Documents/School\ Work\ 2/SE\ Arch/Software_Arch_HWK_3/OSC.db"))
             {
                 System.Console.WriteLine("Data file does not exist");
             }
