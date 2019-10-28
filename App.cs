@@ -33,6 +33,7 @@ namespace SoftwareArch.OSC
                     Console.WriteLine("You are viewing your Profile...");
                     Console.WriteLine("Name: " + name);
                     Console.WriteLine("Current CartID: " + cartID);
+                    DisplayOptions();
                     break;
                 case "C":
                     //Cart
@@ -45,6 +46,7 @@ namespace SoftwareArch.OSC
                     break;
                 default:
                     //Re-show options
+                    DisplayOptions();
                     break;
             }
         }
@@ -93,7 +95,7 @@ namespace SoftwareArch.OSC
         private static void DisplayOptions()
         {
             Console.WriteLine("OPTIONS");
-            Console.WriteLine("     'P' - View, edit profile information");
+            Console.WriteLine("     'P' - View profile information");
             Console.WriteLine("     'C' - View your cart");
             Console.WriteLine("     'I' - View inventory");
         }

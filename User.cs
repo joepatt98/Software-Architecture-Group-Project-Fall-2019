@@ -5,12 +5,12 @@ namespace SoftwareArch.OSC
 {
     class User
     {
-        //TODO: ADD ANY MORE USER VARIABLES WE WOULD LIKE TO HAVE
         //Do not store passwords please
+        public string userId { get; set; }
         public string username { get; set; }
         public string address { get; set; }
-        private string creditCardNumber { get; set; }
-        private string name { get; set; }
+        public string creditCardNumber { get; set; }
+        public string name { get; set; }
         private bool authenticated = false;
 
         public void user(string username = "default")

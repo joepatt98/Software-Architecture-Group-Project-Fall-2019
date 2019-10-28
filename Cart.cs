@@ -96,6 +96,16 @@ namespace SoftwareArch.OSC
             databaseConnection.CloseConnection();
         }
 
+        public void DisplayCurrentCart()
+        {
+            foreach (Item item in itemList)
+            {
+                Console.WriteLine("Name: {0} | Price: {1} | Quantity: {2}", item.Name, item.Price, item.Quantity);
+            }
+
+            Console.WriteLine("Total: " + total);
+        }
+
         private float GetTotalPrice()
         {
             float totalPrice = 0;
@@ -108,19 +118,26 @@ namespace SoftwareArch.OSC
         }
 
         //TODO: CREATE PURCHASING FUNCTIONALITY
-        private void Purchase()
+        public void Purchase()
         {
             databaseConnection.OpenConnection();
+
+            string newPurchaseId = Guid.NewGuid().ToString();
+            databaseConnection.ExecuteQuery(
+                "INSERT INTO PURCHASE (purchaseID, userId, creditCardNumber, address, total) VALUES " +
+                "('" + newPurchaseId + "','" + user.userId + "','" + user.creditCardNumber + "','" + user.address + "'" + total + ")"
+            );
 
             foreach (Item item in itemList)
             {
                 SQLiteDataReader quantity = databaseConnection.ExecuteQuery("SELECT quantity FROM CART_ITEMS WHERE productID = '" + item.Id + "'");
                 int amount = Convert.ToInt32(quantity[0]);
+
                 databaseConnection.ExecuteQuery("DELETE FROM CART_ITEM WHERE productID == (item.Id) (" + item.Id + ")");
                 databaseConnection.ExecuteQuery("UPDATE INVENTORY SET quantity = " + (amount - item.Quantity) + "WHERE productID = '" + item.Id + "'");
-                databaseConnection.ExecuteQuery(
-                       "INSERT INTO PURCHASE (purchaseID, userId, creditCardNumber, address) VALUES (" + Guid.NewGuid().ToString() + "," + user.
-                databaseConnection.ExecuteQuery("INSERT INTO PURCHASE_ITEM")
+                databaseConnection.ExecuteQuery("INSERT INTO PURCHASE_ITEM (purchaseId, productId, quantity) VALUES " +
+                    "('" + newPurchaseId + "','" + item.Id + "'," + item.Quantity + ")"
+                );
 
             }
             databaseConnection.CloseConnection();
