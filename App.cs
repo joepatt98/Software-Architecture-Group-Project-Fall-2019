@@ -1,4 +1,3 @@
-//TODO: TEST
 using System;
 
 namespace SoftwareArch.OSC
@@ -11,13 +10,11 @@ namespace SoftwareArch.OSC
 
             Console.WriteLine("Welcome to Generic Online Shopping Center! ");
 
-            //TODO: INSERT LOGIN STUFF\
             Console.Write("Enter your username: ");
             string usern;
             usern = Console.ReadLine();
             User authent = new User();
             authent.user(usern);
-            //TODO: DECIDE FLOW OF MAIN CONSOLE
             string name = "";
             string cartID = "";
 
@@ -33,11 +30,16 @@ namespace SoftwareArch.OSC
                     Console.WriteLine("You are viewing your Profile...");
                     Console.WriteLine("Name: " + name);
                     Console.WriteLine("Current CartID: " + cartID);
+                    //Viewing purchase history
+                    PurchaseHistory.DisplayPurchaseHistory();
+                    //Re-showing options
                     DisplayOptions();
                     break;
                 case "C":
                     //Cart
                     Console.WriteLine("You are viewing CartID " + cartID);
+                    //Displaying current cart
+                    Cart.DisplayCurrentCart();
                     break;
                 case "I":
                     //Inventory
@@ -95,7 +97,7 @@ namespace SoftwareArch.OSC
         private static void DisplayOptions()
         {
             Console.WriteLine("OPTIONS");
-            Console.WriteLine("     'P' - View profile information");
+            Console.WriteLine("     'P' - View profile information and purchase history");
             Console.WriteLine("     'C' - View your cart");
             Console.WriteLine("     'I' - View inventory");
         }

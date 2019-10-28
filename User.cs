@@ -5,8 +5,6 @@ namespace SoftwareArch.OSC
 {
     class User
     {
-        //TODO: ADD ANY MORE USER VARIABLES WE WOULD LIKE TO HAVE
-        //Do not store passwords please
         private string username;
         private string address;
         private string creditCardNumber;
